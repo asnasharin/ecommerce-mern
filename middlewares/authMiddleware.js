@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import asyncHandler from 'express-async-handler';
-import userModel from '../models/userModel'
+import userModel from '../models/userModel.js'
 
 // protected route
  export const protect = asyncHandler(
@@ -14,7 +14,7 @@ import userModel from '../models/userModel'
 
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-            const user = await userModel.findById(decode.userId);
+            const user = await userModel.findById(decode.id);
 
             if(!user) {
                 res.status(401);
