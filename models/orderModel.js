@@ -12,34 +12,32 @@ const orderSchema = new mongoose.Schema({
         },
         address: {
             type: String,
-            required: true
+            required: true,
         },
         city: {
             type: String,
             required: true,
-          },
-      
-          state: {
+        },
+        state: {
             type: String,
             required: true,
-          },
-      
-          country: {
-            type: String,
-            required: true, 
-          },
-          pinCode: {
-            type: Number,
-            required: true,
-          },
-          phoneNo: {
-            type: Number,
-            required: true,
-          },
-          email : {
+        },
+        country: {
             type: String,
             required: true,
-          },
+        },
+        pinCode: {
+            type: String, 
+            required: true,
+        },
+        phoneNo: {
+            type: String, 
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
     },
 
     // order item details
@@ -52,83 +50,84 @@ const orderSchema = new mongoose.Schema({
             price: {
                 type: Number,
                 required: true,
-              },
-        
-              quantity: {
+            },
+            quantity: {
                 type: Number,
                 required: true,
-              },
-        
-              image: {
+            },
+            image: {
                 type: String,
                 required: true,
-              },
-        
-              productId: {
+            },
+            productId: {
                 type: mongoose.Schema.ObjectId,
-                ref: "ProductModel", 
+                ref: "ProductModel",
                 required: true,
-              },
+            },
         },
     ],
 
     // user who ordered
     user: {
         type: mongoose.Schema.ObjectId,
-    ref: "userModel",
-    required: true,
-  },
-  // payment status of product :
-  paymentInfo: {
-    id: {
-      type: String,
-      required: true,
+        ref: "UserModel", 
+        required: true,
     },
-    status: {
-      type: String,
-      required: true,
+
+    // payment status of product
+    paymentInfo: {
+        id: {
+            type: String,
+            required: true,
+        },
+        status: {
+            type: String,
+            required: true,
+        },
     },
-  },
-  // payment timing
-  paidAt: {
-    type: Date,
-  },
 
-  itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+    // payment timing
+    paidAt: {
+        type: Date,
+    },
 
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+    itemsPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
 
-  shippingPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  // order pending or delilverd or confirm
-  orderStatus: {
-    type: String,
-    required: true,
-    default: "Processing",
-  },
+    taxPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
 
-  deliveredAt: Date,
+    shippingPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
 
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+    totalPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+
+    // order pending or delivered or confirmed
+    orderStatus: {
+        type: String,
+        required: true,
+        default: "Processing",
+    },
+
+    deliveredAt: Date,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const OrderModel = mongoose.model("OrderModel", orderSchema);
