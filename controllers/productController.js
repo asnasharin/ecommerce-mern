@@ -238,8 +238,6 @@ export const createProductReview = asyncHandler(
 export const deleteReview = asyncHandler(
     async( req, res, next) => {
 
-    console.log("Received delete review request with query:", req.query);
-
         const product = await ProductModel.findById(req.query.product_id);
 
         if(!product) {
