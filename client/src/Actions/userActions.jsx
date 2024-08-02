@@ -1,10 +1,4 @@
 import axios from "axios";
-import { 
-    REGISTER_USER_FAIL,
-    REGISTER_USER_REQUEST,
-    REGISTER_USER_SUCCESS ,
-
- } from "../constants/userConstants";
  import { createAsyncThunk } from "@reduxjs/toolkit"
 
 //  register user
@@ -13,7 +7,7 @@ export const signup = createAsyncThunk(
     "auth/signup",
     async (signupData, thunkAPI) => {
         try {
-            const { data } = await axios.post("api/v1/register", signupData, {
+            const { data } = await axios.post("http://localhost:5000/api/v1/register", signupData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             return data;

@@ -1,9 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { 
-    REGISTER_USER_FAIL,
-    REGISTER_USER_SUCCESS,
-    REGISTER_USER_REQUEST
- } from "../constants/userConstants"
 import { signup } from "../Actions/userActions";
 
 //  initail state
@@ -24,7 +19,7 @@ const user = localStorage.getItem("user")
     reducers: {
         logout: (state) => {
             state.user = null;
-            state.isAuthenticted = false;
+            state.isAuthenticated = false;
             localStorage.removeItem("user");
             localStorage.removeItem("token");
             window.location.reload();
@@ -47,7 +42,7 @@ const user = localStorage.getItem("user")
         })
         .addCase(signup.fulfilled, (state, action) => {
             state.loading = false;
-            state.isAuthenticted = true;
+            state.isAuthenticated = true;
             state.user = action.payload.user;
             localStorage.setItem("user", JSON.stringify(action.payload.user));
             localStorage.setItem("token", JSON.stringify(action.payload.token));
