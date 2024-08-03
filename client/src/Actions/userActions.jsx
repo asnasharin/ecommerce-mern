@@ -1,31 +1,43 @@
 import axios from "axios";
- import { createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-//  register user
+// Register user
 
 export const signup = createAsyncThunk(
     "auth/signup",
     async (signupData, thunkAPI) => {
         try {
-            const { data } = await axios.post("http://localhost:5000/api/v1/register", signupData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            return data;
+            const { data } = await axios.post(
+                "http://localhost:5000/api/v1/register",
+                signupData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            return data; 
         } catch (error) {
-            const axiosError = error;
             let payload;
-            if (axiosError.message === "Network Error") {
+            
+            if (error.response) {
+
                 payload = {
-                    message: axiosError.message,
-                    status: 404,
+                    message: error.response.data.message || "An error occurred",
+                    status: error.response.status,
+                };
+            } else if (error.request) {
+
+                payload = {
+                    message: "Network Error: No response received",
+                    status: 0,
                 };
             } else {
-                const Error = axiosError?.response?.data?.message || "An errro occurred";
+
                 payload = {
-                    message: Error,
-                    status: axiosError.response?.status || 500,
+                    message: error.message || "An unknown error occurred",
+                    status: 500,
                 };
             }
+            
             return thunkAPI.rejectWithValue(payload);
         }
     }

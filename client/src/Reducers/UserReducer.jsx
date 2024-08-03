@@ -55,7 +55,7 @@ const user = localStorage.getItem("user")
     },
  });
 
- export const { logout, reset } = userReducer.actions;
+ export const { logout, clearErrors } = userReducer.actions;
 
  export default userReducer.reducer;
 
