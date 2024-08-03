@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signup } from "../Actions/userActions";
+import { login, signup } from "../Actions/userActions";
 
-//  initail state
-const user = localStorage.getItem("user")
- const initialState = {
+// Initial state
+const user = localStorage.getItem("user");
+const initialState = {
     loading: false,
-    isAuthenticted: false,
+    isAuthenticated: false,
     user: user ? JSON.parse(user) : null,
-    errorMessge: {
+    errorMessage: {
         message: "",
         status: null,
     },
- };
+};
 
- const userReducer = createSlice({
+const userReducer = createSlice({
     name: "auth",
     initialState,
     reducers: {
@@ -25,7 +25,7 @@ const user = localStorage.getItem("user")
             window.location.reload();
         },
         clearErrors: (state) => {
-            state.errorMessge = {
+            state.errorMessage = {
                 message: "",
                 status: null,
             };
@@ -35,7 +35,7 @@ const user = localStorage.getItem("user")
         builder
         .addCase(signup.pending, (state) => {
             state.loading = true;
-            state.errorMessge = {
+            state.errorMessage = {
                 message: null,
                 status: null,
             };
@@ -49,13 +49,27 @@ const user = localStorage.getItem("user")
         })
         .addCase(signup.rejected, (state, action) => {
             state.loading = false;
-            state.isAuthenticted = false;
-            state.errorMessge = action.payload;
+            state.isAuthenticated = false;
+            state.errorMessage = action.payload;
+        })
+        .addCase(login.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(login.fulfilled, (state, action) => {
+            state.loading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload.user;
+            localStorage.setItem("user", JSON.stringify(action.payload.user));
+            localStorage.setItem("token", JSON.stringify(action.payload.token));
+        })
+        .addCase(login.rejected, (state, action) => {
+            state.loading = false;
+            state.isAuthenticated = false;
+            state.errorMessage = action.payload;
         });
     },
- });
+});
 
- export const { logout, reset } = userReducer.actions;
+export const { logout, clearErrors } = userReducer.actions;
 
- export default userReducer.reducer;
-
+export default userReducer.reducer;

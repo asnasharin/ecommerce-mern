@@ -37,12 +37,13 @@ function SignUp() {
 
   useEffect(() => {
     if (error) {
-      toast.error("error");
+      alert("error");
       dispatch(clearError());
     }
 
     if (isAuthenticated) {
       toast.success("Registered Successfully");
+      alert("jhe")
       navigate("/")
     }
   }, [dispatch, isAuthenticated, error, navigate])
