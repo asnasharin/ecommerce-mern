@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import "./Header.scss"
 import { ShoppingCart } from "@mui/icons-material"
 import ProfileModal from './ProfileModal'
+import { useSelector } from 'react-redux'
 
 function Header() {
+    const user = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   return (
     <div className='header_navmenu'>
         <ul>
@@ -28,7 +31,7 @@ function Header() {
             <ShoppingCart className='cart_icon'/>
             </Link>
             <span>
-            <ProfileModal />
+            <ProfileModal user={user} isAuthenticated={isAuthenticated} />
             </span>
         </span>
     </div>
