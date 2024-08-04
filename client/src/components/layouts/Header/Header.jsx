@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "./Header.scss"
 import { ShoppingCart } from "@mui/icons-material"
+import { Badge } from '@mui/material'
 import ProfileModal from './ProfileModal'
 import { useSelector } from 'react-redux'
 
@@ -25,11 +26,13 @@ function Header() {
             </li>
         </ul>
         <span className='left_section'>
-            <Link 
-            to="/cart" 
-            style={{ color: "black", textDecoration: "none"}}>
-            <ShoppingCart className='cart_icon'/>
-            </Link>
+        <Link 
+                    to="/cart" 
+                    style={{ color: "black", textDecoration: "none"}}>
+                    <Badge badgeContent= "0" sx={{ '& .MuiBadge-badge': { backgroundColor: 'red' } }}>
+                        <ShoppingCart className='cart_icon'/>
+                    </Badge>
+                </Link>
             <span>
             <ProfileModal user={user} isAuthenticated={isAuthenticated} />
             </span>
