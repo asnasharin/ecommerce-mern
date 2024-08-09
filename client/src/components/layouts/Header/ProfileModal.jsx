@@ -12,7 +12,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import { useDispatch } from 'react-redux'
-import { logout } from "../../../Reducers/UserReducer" // adjust the import as necessary
+import { logout } from "../../../Reducers/UserReducer" 
 
 const ProfileModal = ({ user, isAuthenticated }) => {
     const dispatch = useDispatch();
@@ -120,12 +120,12 @@ const ProfileModal = ({ user, isAuthenticated }) => {
                         )}
                         <div className="divider" />
                         <div className="profile-menu">
-                            {user && user.role === "admin" && (
+                            {user && user.role === 1 && (
                                 <div className="menu-item" onClick={dashboardHandler}>
                                     <DashboardIcon className="menu-icon" />
                                     <span>Dashboard</span>
                                 </div>
-                            )}
+                              )} 
                             <div className="menu-item" onClick={accountHandler}>
                                 <AccountCircleIcon className="menu-icon" />
                                 <span>Profile</span>
