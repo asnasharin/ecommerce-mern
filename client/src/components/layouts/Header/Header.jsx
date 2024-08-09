@@ -13,7 +13,7 @@ function Header() {
     <div className='header_navmenu'>
         <ul>
             <li>
-                <Link to="/home" className="nav_link" style={{ textDecoration: "none"}}>Home</Link>
+                <Link to="/" className="nav_link" style={{ textDecoration: "none"}}>Home</Link>
             </li>
             <li>
                 <Link to="/product" className="nav_link" style={{ textDecoration: "none"}}>Product</Link>

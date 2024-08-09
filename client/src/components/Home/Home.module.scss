@@ -1,0 +1,6 @@
+.trending_products {
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Optional: Adds space between cards */
+  gap: 20px;
+}

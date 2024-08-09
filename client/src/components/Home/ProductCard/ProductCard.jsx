@@ -1,44 +1,70 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography, Box, Button, Rating, CardActions } from '@mui/material';
-import styles from './ProductCard.module.scss'; // Import the SCSS module
+import { Card, CardMedia, CardContent, Typography, Box, Button, Rating, CardActions, CardActionArea } from '@mui/material';
+import styles from './ProductCard.module.scss'; 
+import { Link } from "react-router-dom"
+import { useDispatch } from 'react-redux';
 
-const ProductCard = () => {
-  // const { image, title, description, oldPrice, discount, price, reviews, imageName } = product;
+const ProductCard = ({ product }) => {
+  const dispatch = useDispatch()
 
   return (
     <Card className={styles.card}>
-      <CardMedia
-        component="img"
-        className={styles.cardMedia}
-        // image={image}
-        // alt={imageName}
-        image='https://m.media-amazon.com/images/I/71u77Ob5LWL._SX450_.jpg'
-      />
-      <CardContent className={styles.cardContent}>
-        <Typography gutterBottom variant="h5" component="div" className={styles.cardTitle}>
-          {/* {title} */}
-          title
-        </Typography>
-        <Typography variant="body2" className={styles.cardDescription}>
-          {/* {description} */}
-          desc
-        </Typography>
-        {/* <Typography variant="body2" className={styles.cardReviews}>
-          Reviews:
-        </Typography> */}
-        <Rating name="read-only" readOnly className={styles.cardRating} />
-        <Box display="flex" alignItems="center" gap="10px">
-              <Typography variant="body1" className={styles.oldPrice}>
-                oldPrice
-              </Typography>
-              <Typography variant="body1" className={styles.newPrice}>
-                discountPrice
+      <Link
+        className="productCard"
+        to={`/product/${product._id}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <CardActionArea>
+          <CardMedia className={styles.media} image={product.images[0]?.url} />
+          <CardContent>
+            <Typography
+              gutterBottom
+              color="black"
+              fontWeight="bold"
+              style={{ fontWeight: "700" }}
+            >
+              {product.name}truncated
+            </Typography>
+            <Box display="flex" alignItems="center">
+              <Rating
+                name="rating"
+                value={product.ratings}
+                precision={0.1}
+                readOnly
+                size="small"
+                style={{ color: "#ed1c24", marginRight: 8, fontWeight: "400" }}
+              />
+              <Typography variant="body2" color="textSecondary">
+                ({product.numOfReviews})
               </Typography>
             </Box>
-      </CardContent>
-      <CardActions className={styles.cardActions}>
-        <Button size="small" className={styles.cartButton}>Add to Cart</Button>
-      </CardActions>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="div"
+              className={styles.description}
+            >
+              {product.description}
+            </Typography>
+            <Box display="flex" alignItems="center" gap="10px" >
+              <Typography variant="body1" className={styles.oldPrice}>
+                {product.price}
+              </Typography>
+              <Typography variant="body1" className={styles.finalPrice}>
+                {product.price}
+              </Typography>
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Link>
+      <Box display="flex" justifyContent="center" p={2}>
+        <Button
+          variant="contained"
+          className={styles.cardbutton}
+        >
+          Add to Cart
+        </Button>
+      </Box>
     </Card>
   );
 };
