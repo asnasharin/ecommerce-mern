@@ -1,0 +1,153 @@
+.productPage {
+  display: flex;
+  padding: 2rem;
+}
+
+.filterBox {
+  flex: 0 0 20%; 
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+  padding: 2rem;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  height: fit-content;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.329);
+}
+
+.priceFilter,
+.categoriesFilter,
+.ratingsFilter {
+  padding: 1rem;
+  background-color: #f7f7f7;
+  border-radius: 0.5rem;
+}
+
+.priceSelectors {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  .priceOption {
+    width: 100%;
+  }
+
+  .toText {
+    margin: 0 0.5rem;
+    color: #414141;
+    font-weight: 600;
+  }
+}
+
+.filter_divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 1rem 0;
+}
+
+.productsContainer {
+  flex: 1; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-left: 2rem;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.products1 {
+  display: flex;
+  justify-content: center;
+}
+
+.categoryBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  list-style: none; 
+  padding: 0;
+}
+
+.category-link {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.61);
+  font: 400 0.8vmax "Roboto";
+  margin: 0.4vmax;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.category-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.category-checkbox {
+  width: 16px;
+  height: 16px;
+}
+
+.category-checkbox:checked + .category-label::before {
+  background-color: #414141;
+}
+
+@media screen and (max-width: 1100px) {
+  .filterBox {
+    width: 30vmax;
+  }
+  .page-link {
+    font: 300 1.2vmax "Roboto";
+  }
+  .products1 {
+    width: 55vw;
+  }
+  .category-link {
+    font: 400 1.3vmax "Roboto";
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .filterBox {
+    width: 40vmax;
+  }
+  .products1 {
+    width: 45vw;
+  }
+
+  .page-link {
+    font: 300 1.5vmax "Roboto";
+  }
+  .category-link {
+    font: 400 1.6vmax "Roboto";
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .productPageTop {
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .filterBox {
+    width: 60%;
+    margin: 1rem 0 0 0;
+  }
+
+  .products {
+    width: 100%;
+    margin: 1rem 0 0 0;
+  }
+  .products1 {
+    width: 100%;
+    margin: 1rem 0 0 0;
+  }
+}
