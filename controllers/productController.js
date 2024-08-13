@@ -52,8 +52,8 @@ export const createProductController = asyncHandler (
     }
 )
 
-// get all product 
-export const getAllProduct = asyncHandler (
+// get all product admin
+export const getAllProductsAdmin= asyncHandler (
     async (req, res) => {
 
         const data = await ProductModel.find({});
@@ -66,7 +66,45 @@ export const getAllProduct = asyncHandler (
     }
 )
 
-// updata product
+// getall product 
+export const getAllProduct = asyncHandler(
+    async (req, res) => {
+        try {
+            const { price, category, ratings } = req.query;
+            console.log("Backend query filters:", { price, category, ratings });
+        let query = {};
+
+        if (category) {
+            query.category = category;
+        }
+
+        if (price) {
+            const [min, max] = price.split(',');
+            query.price = {$gte: Number(min), $lte: Number(max) };
+        }
+
+        if (ratings) {
+            query.ratings = { $gte: Number(ratings) };
+        }
+
+        const data = await ProductModel.find(query);
+
+        res.status(200).json({
+            success: true,
+            count: data.length,
+            data,
+        });
+
+        } catch (error) {
+           res.status(500).send({
+            success: false,
+            message: error.message
+           }) 
+        }
+    } 
+)
+
+// update product
 export const updateProduct = asyncHandler(
     async (req, res, next) => {
         // Find the product by ID

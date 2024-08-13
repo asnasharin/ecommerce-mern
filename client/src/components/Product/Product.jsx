@@ -1,96 +1,134 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../Actions/productAction'; // Adjust the import path if needed
+import ProductCard from '../Home/ProductCard/ProductCard';
 import styles from './Product.module.scss';
-import { FormControlLabel, MenuItem, Radio, RadioGroup, Select, Slider, Typography } from '@mui/material';
-import { ArrowDropDown } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, getProducts } from "../../Actions/productAction";
-import ProductCard from "../Home/ProductCard/ProductCard";
+import { FormControlLabel, Radio, RadioGroup, Slider, Typography, Button } from '@mui/material';
+import InventoryIcon from "@mui/icons-material/Inventory"; // Import the InventoryIcon
 
 function Product() {
   const categories = ["men", "women", "kids", "furniture", "shoe", "perfumes"];
-  const { products, error } = useSelector((state) => state.products);
+  const { products, error, loading } = useSelector((state) => state.products);
   const dispatch = useDispatch();
+
+  const [price, setPrice] = useState([0, 100000]);
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState("");
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
+      console.error(error);
     }
-    dispatch(getProducts());
-  }, [dispatch, error]);
+
+    // Pass query parameters to the action
+    dispatch(getProducts({ price, category, rating }));
+  }, [dispatch, error, price, category, rating]);
+
+  const priceHandler = (event, newPrice) => {
+    setPrice(newPrice);
+  };
+
+  const handleCategory = (cat) => {
+    setCategory(cat);
+  };
+
+  const handleRating = (event) => {
+    setRating(event.target.value);
+  };
 
   return (
-    <div className={styles.productPage}>
-      <div className={styles.filterBox}>
-        {/* Price Filter */}
-        <div className={styles.priceFilter}>
-          <Typography style={{ fontSize: '18px', fontWeight: 700, color: '#414141' }}>
-            Price
-          </Typography>
-          <Slider min={0} max={100000} step={100} valueLabelDisplay='auto' />
-          <div className={styles.priceSelectors}>
-            <Select
-              className={styles.priceOption}
-              defaultValue={5000}
-              IconComponent={ArrowDropDown}
+    loading ? (
+      <h1>Loading...</h1>
+    ) : (
+      <>
+        {products === undefined || products.length === 0 ? (
+          <div className={styles.emptyCartContainer} style={{ marginTop: "5rem", background: "white" }}>
+            <InventoryIcon className={styles.cartIcon} />
+            <Typography variant="h5" component="h1" className={styles.cartHeading}>
+              Product Not Found
+            </Typography>
+            <Typography variant="body1" className={styles.cartText}>
+              Nothin' to see here.
+            </Typography>
+            <Typography variant="body1" className={styles.cartText}>
+              There is no product with this name.
+            </Typography>
+            <Button
+              className={styles.shopNowButton}
+              onClick={() => window.location.reload()}
+              style={{ width: "7rem" }}
             >
-              <MenuItem value={5000} className={styles.menu_item}>5000</MenuItem>
-              <MenuItem value={10000} className={styles.menu_item}>10000</MenuItem>
-            </Select>
-            <span className={styles.toText}>to</span>
-            <Select
-              className={styles.priceOption}
-              defaultValue={50000}
-              IconComponent={ArrowDropDown}
-            >
-              <MenuItem value={50000} className={styles.menu_item}>50000</MenuItem>
-              <MenuItem value={20000} className={styles.menu_item}>20000</MenuItem>
-            </Select>
+              Refresh
+            </Button>
           </div>
-        </div>
+        ) : (
+          <div className={styles.productPage}>
+            {/* Filters */}
+            <div className={styles.filterBox}>
+              {/* Price Filter */}
+              <div className={styles.priceFilter}>
+                <Typography style={{ fontSize: '18px', fontWeight: 700, color: '#414141' }}>
+                  Price
+                </Typography>
+                <Slider
+                  value={price}
+                  onChange={priceHandler}
+                  min={0} max={100000} step={100}
+                  valueLabelDisplay='auto'
+                />
+              </div>
 
-        <div className={styles.filter_divider}></div>
+              <div className={styles.filter_divider}></div>
 
-        {/* Categories Filter */}
-        <div className={styles.categoriesFilter}>
-          <Typography style={{ fontSize: "18px", fontWeight: 700, color: "#414141" }}>
-            Categories
-          </Typography>
-          <ul className={styles.categoryBox}>
-            {categories.map((category, index) => (
-              <li key={index}>
-                <label htmlFor={`category-${index}`}>
-                  <input type="checkbox" id={`category-${index}`} />
-                  {category}
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
+              {/* Categories Filter */}
+              <div className={styles.categoriesFilter}>
+                <Typography style={{ fontSize: "18px", fontWeight: 700, color: "#414141" }}>
+                  Categories
+                </Typography>
+                <ul className={styles.categoryBox}>
+                  {categories.map((cat, index) => (
+                    <li key={index}>
+                      <label htmlFor={`category-${index}`}>
+                        <input
+                          type="checkbox"
+                          id={`category-${index}`}
+                          value={cat}
+                          onChange={() => handleCategory(cat)}
+                          checked={category === cat}
+                        />
+                        {cat}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        <div className={styles.filter_divider}></div>
+              <div className={styles.filter_divider}></div>
 
-        {/* Ratings Filter */}
-        <div className={styles.ratingsFilter}>
-          <Typography style={{ fontSize: "18px", fontWeight: 700, color: "#414141" }}>
-            Ratings Above
-          </Typography>
-          <RadioGroup row>
-            <FormControlLabel value="4" control={<Radio />} label="4★ & above" />
-            <FormControlLabel value="3" control={<Radio />} label="3★ & above" />
-            <FormControlLabel value="2" control={<Radio />} label="2★ & above" />
-          </RadioGroup>
-        </div>
-      </div>
+              {/* Ratings Filter */}
+              <div className={styles.ratingsFilter}>
+                <Typography style={{ fontSize: "18px", fontWeight: 700, color: "#414141" }}>
+                  Ratings Above
+                </Typography>
+                <RadioGroup row value={rating} onChange={handleRating}>
+                  <FormControlLabel value="4" control={<Radio />} label="4★ & above" />
+                  <FormControlLabel value="3" control={<Radio />} label="3★ & above" />
+                  <FormControlLabel value="2" control={<Radio />} label="2★ & above" />
+                </RadioGroup>
+              </div>
+            </div>
 
-      <div className={styles.productsContainer}>
-        <div className={products.length < 2 ? styles.products1 : styles.products}>
-          {products && products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
-      </div>
-    </div>
+            <div className={styles.productsContainer}>
+              <div className={products.length < 2 ? styles.products1 : styles.products}>
+                {products && products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    )
   );
 }
 
