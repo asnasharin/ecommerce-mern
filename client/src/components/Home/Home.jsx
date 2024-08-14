@@ -13,7 +13,7 @@ function Home() {
   const {  products, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    console.log(products)
+    console.log("products card",products)
     if(error) {
       alert(error);
       dispatch(clearErrors());
