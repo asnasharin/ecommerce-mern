@@ -35,6 +35,34 @@ export const getProducts = createAsyncThunk(
 );
 
 
+// getAdmin products
+export const getAdminProducts = createAsyncThunk(
+  "get/AdminProducts",
+  async(_, thunkApi) => {
+    try {
+      const  data  = await axios.get('http://localhost:5000/api/v1/admin/products', { headers: { 'Cache-Control': 'no-cache' } });
+      console.log("api", data)
+      return data.data;
+      
+    } catch (error) {
+      if(error.response) {
+        const payload = {
+          message: error.response.data.message || "an error occured",
+          status: error.response.status,
+        };
+        return thunkApi.rejectWithValue(payload);
+    } else {
+      const payload = {
+        message: error.message,
+        status: 400,
+      };
+      return thunkApi.rejectWithValue(payload);
+    }
+  }
+}
+)
+
+
 export const clearErrors = () => async (dispatch) => {
   dispatch();
 };
