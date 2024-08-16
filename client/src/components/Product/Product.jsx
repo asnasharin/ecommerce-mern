@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../Actions/productAction'; // Adjust the import path if needed
+import { getProducts } from '../../Actions/productAction'; 
 import ProductCard from '../Home/ProductCard/ProductCard';
 import styles from './Product.module.scss';
 import { FormControlLabel, Radio, RadioGroup, Slider, Typography, Button } from '@mui/material';
-import InventoryIcon from "@mui/icons-material/Inventory"; // Import the InventoryIcon
+import InventoryIcon from "@mui/icons-material/Inventory"; 
 
 function Product() {
   const categories = ["men", "women", "kids", "furniture", "shoe", "perfumes"];
-  const { products, error, loading } = useSelector((state) => state.products);
+  const { products, error, loading } = useSelector((state) => state.products.user);
   const dispatch = useDispatch();
 
   const [price, setPrice] = useState([0, 100000]);

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../Api/api"
 
 // get all products
 export const getProducts = createAsyncThunk(
@@ -13,7 +14,7 @@ export const getProducts = createAsyncThunk(
       if (rating) query += `ratings=${rating}&`;
 
       // Make the API call with the query string
-      const { data } = await axios.get(`http://localhost:5000/api/v1/get-product${query}`);
+      const { data } = await api.get(`/get-product${query}`);
       console.log(data);
       return data.data;
     } catch (error) {
@@ -40,7 +41,7 @@ export const getAdminProducts = createAsyncThunk(
   "get/AdminProducts",
   async(_, thunkApi) => {
     try {
-      const  data  = await axios.get('http://localhost:5000/api/v1/admin/products', { headers: { 'Cache-Control': 'no-cache' } });
+      const  data  = await api.get('/admin/products');
       console.log("api", data)
       return data.data;
       
@@ -60,6 +61,32 @@ export const getAdminProducts = createAsyncThunk(
     }
   }
 }
+)
+
+// deleteproduct admin
+export const DeleteProduct = createAsyncThunk(
+  'product/deleteproduct',
+  async(id, thunkApi) => {
+    try {
+      const { data } = await api.delete(`/admin/delete-prod/${id}`);
+      return data;
+  
+    } catch (error) {
+      if(error.response) {
+        let payload = {
+          message: error.response.data.message || "An error occured",
+          status: error.response.status
+        }
+        return thunkApi.rejectWithValue(payload)
+      } else {
+        let payload = {
+          message: error.message,
+          status: error.status || 500
+        }
+        return thunkApi.rejectWithValue(payload)
+      }
+    }
+  }
 )
 
 

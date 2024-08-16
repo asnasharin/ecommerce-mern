@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAdminProducts, getProducts } from "../Actions/productAction";
+import { DeleteProduct, getAdminProducts, getProducts } from "../Actions/productAction";
 
 const initialUserState = {
     products: [],
@@ -50,6 +50,22 @@ const productSlice = createSlice({
                 state.admin.loading = false;
                 state.admin.error = action.payload;
             });
+
+            // admin delete product
+            builder
+            .addCase(DeleteProduct.pending, (state) => {
+                state.admin.loading = true 
+            })
+            .addCase(DeleteProduct.fulfilled, (state, action) => {
+                state.admin.loading = false;
+                state.admin.products = state.admin.products.filter(
+                    (product) => product._id !== action.meta.arg
+                );
+            })
+            .addCase(DeleteProduct.rejected, (state, action) => {
+                state.admin.loading = false;
+                state.admin.error = action.payload;
+            })
     },
 });
 
