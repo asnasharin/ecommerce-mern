@@ -7,6 +7,8 @@ import Home from './components/Home/Home';
 import Product from './components/Product/Product';
 import Footer from './components/layouts/Footer/Footer';
 import Newsletter from './components/layouts/Footer/Newsletter/NewsLetter';
+import Dashboard from './components/Admin/Dashboard';
+import ProductList from './components/Admin/ProductList';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path='/product' element={<Product />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
+        <Route path='/admin/products' element={<ProductList />} />
       </Routes>
       <Newsletter />
       <Footer />

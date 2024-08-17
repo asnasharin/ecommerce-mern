@@ -10,10 +10,10 @@ import styles from "./Home.module.scss"
 function Home() {
   
   const dispatch = useDispatch();
-  const {  products, error } = useSelector((state) => state.products);
+  const {  products, error } = useSelector((state) => state.products.user);
 
   useEffect(() => {
-    console.log(products)
+    console.log("products card",products)
     if(error) {
       alert(error);
       dispatch(clearErrors());

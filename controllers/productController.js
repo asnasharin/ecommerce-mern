@@ -53,18 +53,17 @@ export const createProductController = asyncHandler (
 )
 
 // get all product admin
-export const getAllProductsAdmin= asyncHandler (
-    async (req, res) => {
+export const getAllProductsAdmin = asyncHandler(async (req, res) => {
+    const data = await ProductModel.find({});
 
-        const data = await ProductModel.find({});
+    res.setHeader('Cache-Control', 'no-store');
+    res.status(200).json({
+        success: true,
+        message: "get all products",
+        data
+    });
+});
 
-        res.status(200).json({
-            success: true,
-            message: "get all produts",
-            data
-        })
-    }
-)
 
 // getall product 
 export const getAllProduct = asyncHandler(
