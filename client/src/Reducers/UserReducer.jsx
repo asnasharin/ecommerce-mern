@@ -5,7 +5,7 @@ import { login, signup } from "../Actions/userActions";
 const user = localStorage.getItem("user");
 const initialState = {
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: localStorage.getItem("token"),
     user: user ? JSON.parse(user) : null,
     errorMessage: {
         message: "",

@@ -9,6 +9,8 @@ import Footer from './components/layouts/Footer/Footer';
 import Newsletter from './components/layouts/Footer/Newsletter/NewsLetter';
 import Dashboard from './components/Admin/Dashboard';
 import ProductList from './components/Admin/ProductList';
+import NewProduct from './components/Admin/NewProduct';
+import PrivateRoute from './components/Route/PrivateRoute';
 
 function App() {
   return (
@@ -19,8 +21,11 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path='/product' element={<Product />} />
+        <Route element={<PrivateRoute />}  >
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/products' element={<ProductList />} />
+        <Route path='/admin/new/product' element={<NewProduct />} />
+         </Route>
       </Routes>
       <Newsletter />
       <Footer />
