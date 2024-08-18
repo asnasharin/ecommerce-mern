@@ -110,7 +110,7 @@ export const updateProduct = asyncHandler(
         const product = await ProductModel.findById(req.params.id);
 
         if (!product) {
-            return next(new Error("Product not found", 404)); // Changed error handling
+            return next(new Error("Product not found", 404)); 
         }
 
         let images = []

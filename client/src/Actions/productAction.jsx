@@ -90,6 +90,31 @@ export const DeleteProduct = createAsyncThunk(
   }
 )
 
+// create product admin
+export const createProduct = createAsyncThunk(
+  "product/createproduct",
+  async(productData, thunkApi) => {
+    try {
+      const response = await api.post("/admin/create-product", productData);
+      return response.data;
+    } catch (error) {
+      if(error.response) {
+        let payload = {
+          message: error.response.data.message || "an error occured",
+          status: error.response.status,
+        }
+        return thunkApi.rejectWithValue(payload);
+      } else {
+        let payload = {
+          message: error.message,
+          status: error.status || 500
+        } 
+        return thunkApi.rejectWithValue(payload);
+      }
+    }
+  }
+)
+
 
 export const clearErrors = () => async (dispatch) => {
   dispatch();

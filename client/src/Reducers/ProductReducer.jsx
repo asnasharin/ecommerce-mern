@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DeleteProduct, getAdminProducts, getProducts } from "../Actions/productAction";
+import { createProduct, DeleteProduct, getAdminProducts, getProducts } from "../Actions/productAction";
 
 const initialUserState = {
     products: [],
@@ -51,10 +51,10 @@ const productSlice = createSlice({
                 state.admin.error = action.payload;
             });
 
-            // admin delete product
-            builder
+        // Admin Delete Product
+        builder
             .addCase(DeleteProduct.pending, (state) => {
-                state.admin.loading = true 
+                state.admin.loading = true;
             })
             .addCase(DeleteProduct.fulfilled, (state, action) => {
                 state.admin.loading = false;
@@ -65,7 +65,22 @@ const productSlice = createSlice({
             .addCase(DeleteProduct.rejected, (state, action) => {
                 state.admin.loading = false;
                 state.admin.error = action.payload;
+            });
+
+        // Admin Create Product
+        builder
+            .addCase(createProduct.pending, (state) => {
+                state.admin.loading = true;
             })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                state.admin.loading = false;
+                state.admin.products.push(action.payload);
+                state.admin.error = null;  
+            })
+            .addCase(createProduct.rejected, (state, action) => {
+                state.admin.loading = false;
+                state.admin.error = action.payload;
+            });
     },
 });
 
