@@ -60,17 +60,23 @@ const productSlice = createSlice({
             .addCase(DeleteProduct.pending, (state) => {
                 state.admin.loading = true;
             })
+            // .addCase(DeleteProduct.fulfilled, (state, action) => {
+            //     state.admin.loading = false;
+            //     state.admin.products = state.admin.products.filter(
+            //         (product) => product._id !== action.meta.arg
+            //     );
+            // })
             .addCase(DeleteProduct.fulfilled, (state, action) => {
                 state.admin.loading = false;
-                state.admin.products = state.admin.products.filter(
-                    (product) => product._id !== action.meta.arg
-                );
-                state.admin.success = true
+                if (Array.isArray(state.admin.products)) {
+                    state.admin.products = state.admin.products.filter(
+                        (product) => product._id !== action.meta.arg
+                    );
+                } 
             })
             .addCase(DeleteProduct.rejected, (state, action) => {
                 state.admin.loading = false;
                 state.admin.error = action.payload;
-                state.admin.success = false;
             });
 
         // Admin Create Product

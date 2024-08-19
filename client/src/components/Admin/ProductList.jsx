@@ -22,6 +22,7 @@ function ProductList() {
 
   const deleteProductHandler = (id) => {
     dispatch(DeleteProduct(id));
+    window.location.reload();
   };
 
   const columns = [
