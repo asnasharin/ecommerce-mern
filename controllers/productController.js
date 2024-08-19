@@ -56,7 +56,6 @@ export const createProductController = asyncHandler (
 export const getAllProductsAdmin = asyncHandler(async (req, res) => {
     const data = await ProductModel.find({});
 
-    res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({
         success: true,
         message: "get all products",
@@ -70,7 +69,6 @@ export const getAllProduct = asyncHandler(
     async (req, res) => {
         try {
             const { price, category, ratings } = req.query;
-            console.log("Backend query filters:", { price, category, ratings });
         let query = {};
 
         if (category) {

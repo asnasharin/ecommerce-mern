@@ -6,7 +6,7 @@ function PrivateRoute() {
     const { isAuthenticated, loading, isAdmin, user } = useSelector((state) => state.user);
 
     if (loading) {
-        return <h2>Loading...</h2>; // Return JSX element for loading state
+        return <h2>Loading...</h2>; 
     }
 
     if (!isAuthenticated) {
@@ -17,7 +17,7 @@ function PrivateRoute() {
         return <Navigate to="/login" replace />;
     }
 
-    return <Outlet />; // Render child routes if authenticated
+    return <Outlet />; 
 }
 
 export default PrivateRoute;

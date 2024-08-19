@@ -4,13 +4,14 @@ import { createProduct, DeleteProduct, getAdminProducts, getProducts } from "../
 const initialUserState = {
     products: [],
     error: null,
-    loading: false
+    loading: false,
 };
 
 const initialAdminState = {
     products: [],
     error: null,
-    loading: false
+    loading: false,
+    success: false,
 };
 
 const productSlice = createSlice({
@@ -21,6 +22,9 @@ const productSlice = createSlice({
             state.user.error = null;
             state.admin.error = null;
         },
+        clearSuccess: (state) => {
+            state.admin.success = false;
+        }
     },
     extraReducers: (builder) => {
         // User Products
@@ -61,10 +65,12 @@ const productSlice = createSlice({
                 state.admin.products = state.admin.products.filter(
                     (product) => product._id !== action.meta.arg
                 );
+                state.admin.success = true
             })
             .addCase(DeleteProduct.rejected, (state, action) => {
                 state.admin.loading = false;
                 state.admin.error = action.payload;
+                state.admin.success = false;
             });
 
         // Admin Create Product
@@ -76,10 +82,12 @@ const productSlice = createSlice({
                 state.admin.loading = false;
                 state.admin.products.push(action.payload);
                 state.admin.error = null;  
+                state.admin.success = true;
             })
             .addCase(createProduct.rejected, (state, action) => {
                 state.admin.loading = false;
                 state.admin.error = action.payload;
+                state.admin.success = false;
             });
     },
 });
