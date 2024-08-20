@@ -5,7 +5,7 @@ import { isAdmin, protect } from "../middlewares/authMiddleware.js";
 
 const route = Router();
 
-route.post("/create-product",protect, isAdmin, createProductController);
+route.post("/admin/create-product",protect, isAdmin, createProductController);
 route.get("/get-product", getAllProduct);
 route.get("/admin/products",protect, isAdmin,getAllProductsAdmin);
 route.put("/update-prod/:id",protect, isAdmin, updateProduct);

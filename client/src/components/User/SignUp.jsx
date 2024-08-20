@@ -43,7 +43,6 @@ function SignUp() {
 
     if (isAuthenticated) {
       toast.success("Registered Successfully");
-      alert("jhe")
       navigate("/")
     }
   }, [dispatch, isAuthenticated, error, navigate])
