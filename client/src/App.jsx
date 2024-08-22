@@ -11,6 +11,7 @@ import Dashboard from './components/Admin/Dashboard';
 import ProductList from './components/Admin/ProductList';
 import NewProduct from './components/Admin/NewProduct';
 import PrivateRoute from './components/Route/PrivateRoute';
+import UpdateProduct from './components/Admin/UpdateProduct';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/products' element={<ProductList />} />
         <Route path='/admin/new/product' element={<NewProduct />} />
+        <Route path='/admin/product/:id' element={<UpdateProduct />} />
          </Route>
       </Routes>
       <Newsletter />

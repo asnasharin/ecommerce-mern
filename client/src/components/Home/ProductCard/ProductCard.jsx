@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
               fontWeight="bold"
               style={{ fontWeight: "700" }}
             >
-              {product.name}truncated
+              {product.name}
             </Typography>
             <Box display="flex" alignItems="center">
               <Rating
