@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProduct, DeleteProduct, getAdminProducts, getProducts } from "../Actions/productAction";
+import { createProduct, DeleteProduct, getAdminProducts, getProductDetails, getProducts, updateProduct } from "../Actions/productAction";
 
 const initialUserState = {
     products: [],
@@ -14,9 +14,19 @@ const initialAdminState = {
     success: false,
 };
 
+const initialProductDetailsState = {
+    product: {},  // or an empty object {} depending on your preference
+    error: null,
+    loading: false,
+};
+
 const productSlice = createSlice({
     name: "products",
-    initialState: { user: initialUserState, admin: initialAdminState },
+    initialState: {
+        user: initialUserState, 
+        admin: initialAdminState,
+        // productDetails: initialProductDetailsState,
+    },
     reducers: {
         clearErrors: (state) => {
             state.user.error = null;
@@ -60,12 +70,6 @@ const productSlice = createSlice({
             .addCase(DeleteProduct.pending, (state) => {
                 state.admin.loading = true;
             })
-            // .addCase(DeleteProduct.fulfilled, (state, action) => {
-            //     state.admin.loading = false;
-            //     state.admin.products = state.admin.products.filter(
-            //         (product) => product._id !== action.meta.arg
-            //     );
-            // })
             .addCase(DeleteProduct.fulfilled, (state, action) => {
                 state.admin.loading = false;
                 if (Array.isArray(state.admin.products)) {
@@ -86,7 +90,7 @@ const productSlice = createSlice({
             })
             .addCase(createProduct.fulfilled, (state, action) => {
                 state.admin.loading = false;
-                state.admin.products.push(action.payload);
+                state.admin.products = action.payload;
                 state.admin.error = null;  
                 state.admin.success = true;
             })
@@ -95,7 +99,37 @@ const productSlice = createSlice({
                 state.admin.error = action.payload;
                 state.admin.success = false;
             });
-    },
+            // Handling product details
+        builder
+            .addCase(getProductDetails.pending, (state) => {
+            state.admin.loading = true;
+            })
+            .addCase(getProductDetails.fulfilled, (state, action) => {
+            state.admin.loading = false;
+            state.admin.products = action.payload;
+            })
+            .addCase(getProductDetails.rejected, (state, action) => {
+            state.admin.loading = false;
+            state.admin.error = action.payload;
+            });
+
+            // Handling product update
+            builder
+                .addCase(updateProduct.pending, (state) => {
+                state.admin.loading = true;
+                })
+                .addCase(updateProduct.fulfilled, (state, action) => {
+                    state.admin.products = action.payload;
+                    state.admin.loading = false;
+                    state.admin.success = true;
+                    state.admin.error = null;
+                })
+                .addCase(updateProduct.rejected, (state, action) => {
+                state.admin.loading = false;
+                state.admin.error = action.payload;
+                state.admin.success = false;
+                });
+       },
 });
 
 export const { clearErrors } = productSlice.actions;

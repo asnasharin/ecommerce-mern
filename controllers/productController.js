@@ -4,7 +4,7 @@ import cloudinary from "cloudinary"
 
 // create product
 export const createProductController = asyncHandler (
-    async (req, res, next) => {
+    async (req, res) => {
         let images = [];
 
         if (req.body.images) {
@@ -101,54 +101,68 @@ export const getAllProduct = asyncHandler(
     } 
 )
 
-// update product
+
+
 export const updateProduct = asyncHandler(
     async (req, res, next) => {
-        // Find the product by ID
         const product = await ProductModel.findById(req.params.id);
 
         if (!product) {
             return next(new Error("Product not found", 404)); 
         }
 
-        let images = []
+        let images = [];
 
         // Handle image URLs
-        if (typeof req.body.images === "string") {
-            images.push(req.body.images);
-        } else {
-            images = req.body.images;
-        }
-
-        if (images.length > 0) { // Ensure images array is not empty
-            // Delete old images from Cloudinary
-            for (let i = 0; i < product.images.length; i++) {
-                await cloudinary.v2.uploader.destroy(product.images[i].product_id);
+        if (req.body.images) {
+            if (typeof req.body.images === "string") {
+                images.push(req.body.images);
+            } else {
+                images = req.body.images;
             }
         }
 
-        const imagesLinks = [];
-        // Upload new images to Cloudinary
-        for (let img of images) {
-            const result = await cloudinary.v2.uploader.upload(img, {
-                folder: "Products",
-            });
+        console.log("Images Array:", images);
 
-            imagesLinks.push({
-                product_id: result.public_id,
-                url: result.secure_url,
-            })
+        // Check if images need to be updated
+        if (images.length > 0) {
+            for (let i = 0; i < product.images.length; i++) {
+                const imageId = product.images[i].product_id;
+
+                if (typeof imageId === "string") {
+                    console.log(`Deleting image: ${imageId}`);
+                    await cloudinary.v2.uploader.destroy(imageId);
+                } else {
+                    console.error(`Invalid product_id: Expected a string but received`, typeof imageId);
+                }
+            }
+
+            const imagesLinks = [];
+            for (let img of images) {
+                const result = await cloudinary.v2.uploader.upload(img.url, {
+                    folder: "Products",
+                });
+
+                console.log("Uploaded Image Result:", result);
+
+                imagesLinks.push({
+                    product_id: result.public_id,
+                    url: result.secure_url,
+                });
+            }
+
+            req.body.images = imagesLinks;
+        } else {
+            req.body.images = product.images;
         }
 
-        // Update the product with new images
-        req.body.images = imagesLinks;
-
-        // Update the product in the database
-        const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body, {
+        const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body.product, {
             new: true,
             runValidators: true,
             useFindAndModify: false,
         }); 
+
+        console.log("Updated Product:", updatedProduct);
 
         res.status(200).json({ 
             success: true,
@@ -156,6 +170,101 @@ export const updateProduct = asyncHandler(
         });
     }
 );
+
+// update product
+// export const updateProduct = asyncHandler(
+//     async (req, res, next) => {
+//         // Find the product by ID
+//         const product = await ProductModel.findById(req.params.id);
+
+//         if (!product) {
+//             return next(new Error("Product not found", 404)); 
+//         }
+
+//         let images = []
+
+//         // Handle image URLs
+//         if (typeof req.body.images === "string") {
+//             images.push(req.body.images);
+//         } else {
+//             images = req.body.images;
+//         }
+
+//         // if (product.images.length > 0) { // Ensure images array is not empty
+//         //     // Delete old images from Cloudinary
+//         //     for (let i = 0; i < product.images.length; i++) {
+//         //         await cloudinary.v2.uploader.destroy(product.images[i].product_id);
+//         //     }
+//         // }
+
+//         if(images !== undefined) {
+//             for (let i = 0; i < product.images.length; i++) {
+//                         await cloudinary.v2.uploader.destroy(product.images[i].product_id);
+//                     }
+//         }
+
+//         const imagesLinks = [];
+//         // Upload new images to Cloudinary
+//         for (let img of images) {
+//             const result = await cloudinary.v2.uploader.upload(img, {
+//                 folder: "Products",
+//             });
+
+//             imagesLinks.push({
+//                 product_id: result.public_id,
+//                 url: result.secure_url,
+//             })
+//         }
+
+//         // Update the product with new images
+//         req.body.images = imagesLinks;
+
+//         // Update the product in the database
+//         const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body, {
+//             new: true,
+//             runValidators: true,
+//             useFindAndModify: false,
+//         }); 
+
+//         res.status(200).json({ 
+//             success: true,
+//             product: updatedProduct,
+//         });
+//     }
+// );
+
+
+// export const updateProduct = asyncHandler(
+//     async (req, res, next) => {
+//         // Log the incoming request body
+//         console.log("Update request body:", req.body);
+
+//         // Find the product by ID
+//         const product = await ProductModel.findById(req.params.id);
+
+//         if (!product) {
+//             return next(new Error("Product not found", 404)); 
+//         }
+
+//         // Log the product before update
+//         console.log("Product before update:", product);
+
+//         // Update the product in the database
+//         const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body.product, {
+//             new: true,
+//             runValidators: true,
+//             useFindAndModify: false,
+//         });
+
+//         // Log the updated product
+//         console.log("Product after update:", updatedProduct);
+
+//         res.status(200).json({ 
+//             success: true,
+//             product: updatedProduct,
+//         });
+//     }
+// );
 
 
 // delete product

@@ -115,6 +115,48 @@ export const createProduct = createAsyncThunk(
   }
 )
 
+// update product
+
+export const updateProduct = createAsyncThunk(
+  "product/update",
+  async ({ id, productData }, thunkApi) => {
+    try {
+      const { data } = await api.put(`/update-prod/${id}`, {product: productData}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Return the updated product data
+      return data.product;
+    } catch (error) {
+      if (error.response) {
+        return thunkApi.rejectWithValue({
+          message: error.response.data.message || "An error occurred",
+          status: error.response.status,
+        });
+      } else {
+        return thunkApi.rejectWithValue({
+          message: error.message,
+          status: error.status || 500,
+        });
+      }
+    }
+  }
+);
+
+export const getProductDetails = createAsyncThunk(
+  'product/getProductDetails',
+  async (id, thunkAPI) => {
+    try {
+      const response = await api.get(`/product/${id}`);
+      return response.data.product;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message || 'Failed to fetch product details');
+    }
+  }
+);
+
 
 export const clearErrors = () => async (dispatch) => {
   dispatch();
