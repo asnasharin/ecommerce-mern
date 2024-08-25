@@ -1,0 +1,92 @@
+import { Card, CardContent, CardMedia, IconButton, Input, Typography } from '@mui/material'
+import DeleteIcon from "@mui/icons-material/Delete"
+import RemoveIcon from "@mui/icons-material/Remove"
+import AddIcon from "@mui/icons-material/Add"
+import styles from "./CartItem.module.scss"
+import React from 'react'
+
+function CartItem() {
+  return (
+    <Card 
+    className={length < 2 ? styles.root11 : styles.roots11}
+    >
+      <CardMedia
+        className={styles.media}
+        // image={item.image}
+        // title={item.name}
+      />
+      <CardContent >
+        <div >
+          <div >
+            <Typography variant={styles.subtitle1} >
+              item.name
+            </Typography>
+
+            <IconButton
+              aria-label="delete"
+              className={styles.cartDeleteIcon}
+            //   onClick={() => deleteCartItems(item.productId)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+
+          <div >
+            <Typography  variant={styles.body2}>
+              Price:
+            </Typography>
+            <Typography variant={styles.subtitle1}>
+              finalPrice
+            </Typography>
+            <Typography
+              variant="caption"
+              component="span"
+              color="black"
+              className={styles.itemOldPrice}
+            >
+              <del>dis price</del>
+            </Typography>
+          </div>
+        </div>
+        <div >
+          <div className={styles.prod_details_additem}>
+            <h5>QTY:</h5>
+            <div className={styles.additem}>
+              <IconButton
+                // onClick={() => decreaseQuantity(item.productId, item.quantity)}
+                className={styles.additem_decrease}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <Input
+                readOnly
+                type="number"
+                // value={item.quantity}
+                className="input"
+              />
+              <IconButton
+                // onClick={() =>
+                //   increaseQuantity(item.productId, item.quantity, item.stock)
+                // }
+                className={styles.additem_increase}
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
+          </div>
+
+          <div >
+            <Typography variant={styles.body2} >
+              TOTAL:
+            </Typography>
+            <Typography variant={styles.subtitle1} >
+              total
+            </Typography>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+export default CartItem
