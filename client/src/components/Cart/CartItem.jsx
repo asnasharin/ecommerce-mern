@@ -5,21 +5,22 @@ import AddIcon from "@mui/icons-material/Add"
 import styles from "./CartItem.module.scss"
 import React from 'react'
 
-function CartItem() {
+function CartItem({ item}) {
+
   return (
     <Card 
-    className={length < 2 ? styles.root11 : styles.roots11}
+    className= {styles.roots}
     >
       <CardMedia
         className={styles.media}
-        // image={item.image}
-        // title={item.name}
+        image={item.image}
+        title={item.name}
       />
       <CardContent >
         <div >
           <div >
             <Typography variant={styles.subtitle1} >
-              item.name
+              {item.name}
             </Typography>
 
             <IconButton
@@ -32,8 +33,8 @@ function CartItem() {
           </div>
 
           <div >
-            <Typography  variant={styles.body2}>
-              Price:
+            <Typography  variant={styles.body1}>
+              {item.price}
             </Typography>
             <Typography variant={styles.subtitle1}>
               finalPrice
@@ -50,7 +51,7 @@ function CartItem() {
         </div>
         <div >
           <div className={styles.prod_details_additem}>
-            <h5>QTY:</h5>
+            <h5>QTY:{item.quantity}</h5>
             <div className={styles.additem}>
               <IconButton
                 // onClick={() => decreaseQuantity(item.productId, item.quantity)}
@@ -76,7 +77,7 @@ function CartItem() {
           </div>
 
           <div >
-            <Typography variant={styles.body2} >
+            <Typography variant={styles.body1} >
               TOTAL:
             </Typography>
             <Typography variant={styles.subtitle1} >

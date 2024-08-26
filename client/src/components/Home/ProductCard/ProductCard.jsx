@@ -3,9 +3,17 @@ import { Card, CardMedia, CardContent, Typography, Box, Button, Rating, CardActi
 import styles from './ProductCard.module.scss'; 
 import { Link } from "react-router-dom"
 import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../Actions/CartActions';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
+
+  const handleAddToCart = (id, quantity) => {
+    dispatch(addToCart({id, quantity}));
+    // console.log("product id", id)
+    console.log("btnclicked")
+    console.log('Adding to cart:', id, quantity);
+  }
 
   return (
     <Card className={styles.card}>
@@ -61,6 +69,7 @@ const ProductCard = ({ product }) => {
         <Button
           variant="contained"
           className={styles.cardbutton}
+          onClick={() => handleAddToCart(product._id, 1)}
         >
           Add to Cart
         </Button>
