@@ -157,7 +157,6 @@ export const getProductDetails = createAsyncThunk(
   }
 );
 
-
 export const clearErrors = () => async (dispatch) => {
   dispatch();
 };
