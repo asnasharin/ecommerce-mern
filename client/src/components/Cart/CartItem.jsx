@@ -5,8 +5,8 @@ import AddIcon from "@mui/icons-material/Add"
 import styles from "./CartItem.module.scss"
 import React from 'react'
 
-function CartItem({ item}) {
-
+function CartItem({ item, deleteCartItems, increaseQuantity, decreaseQuantity }) {
+  
   return (
     <Card 
     className= {styles.roots}
@@ -26,7 +26,7 @@ function CartItem({ item}) {
             <IconButton
               aria-label="delete"
               className={styles.cartDeleteIcon}
-            //   onClick={() => deleteCartItems(item.productId)}
+              onClick={() => deleteCartItems(item.productId)}
             >
               <DeleteIcon />
             </IconButton>
@@ -54,7 +54,7 @@ function CartItem({ item}) {
             <h5>QTY:{item.quantity}</h5>
             <div className={styles.additem}>
               <IconButton
-                // onClick={() => decreaseQuantity(item.productId, item.quantity)}
+                onClick={() => decreaseQuantity(item.productId, item.quantity)}
                 className={styles.additem_decrease}
               >
                 <RemoveIcon />
@@ -62,13 +62,13 @@ function CartItem({ item}) {
               <Input
                 readOnly
                 type="number"
-                // value={item.quantity}
+                value={item.quantity}
                 className="input"
               />
               <IconButton
-                // onClick={() =>
-                //   increaseQuantity(item.productId, item.quantity, item.stock)
-                // }
+                onClick={() =>
+                  increaseQuantity(item.productId, item.quantity, item.stock)
+                }
                 className={styles.additem_increase}
               >
                 <AddIcon />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography, Box, Button, Rating, CardActions, CardActionArea } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Box, Button, Rating, CardActionArea } from '@mui/material';
 import styles from './ProductCard.module.scss'; 
 import { Link } from "react-router-dom"
 import { useDispatch } from 'react-redux';
@@ -9,8 +9,8 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
 
   const handleAddToCart = (id, quantity) => {
+    
     dispatch(addToCart({id, quantity}));
-    // console.log("product id", id)
     console.log("btnclicked")
     console.log('Adding to cart:', id, quantity);
   }
