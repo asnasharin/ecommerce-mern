@@ -13,6 +13,7 @@ import NewProduct from './components/Admin/NewProduct';
 import PrivateRoute from './components/Route/PrivateRoute';
 import UpdateProduct from './components/Admin/UpdateProduct';
 import Cart from './components/Cart/Cart';
+import ProductDetails from './components/Product/ProductDetails';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/product' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/product/:id' element={<ProductDetails />} />
         <Route element={<PrivateRoute />}  >
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/products' element={<ProductList />} />

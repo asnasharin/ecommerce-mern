@@ -15,7 +15,7 @@ const initialAdminState = {
 };
 
 const initialProductDetailsState = {
-    product: {},  // or an empty object {} depending on your preference
+    product: {},  
     error: null,
     loading: false,
 };
@@ -25,12 +25,13 @@ const productSlice = createSlice({
     initialState: {
         user: initialUserState, 
         admin: initialAdminState,
-        // productDetails: initialProductDetailsState,
+        productDetails: initialProductDetailsState,
     },
     reducers: {
         clearErrors: (state) => {
             state.user.error = null;
             state.admin.error = null;
+            state.productDetails.error = null;
         },
         clearSuccess: (state) => {
             state.admin.success = false;
@@ -102,15 +103,15 @@ const productSlice = createSlice({
             // Handling product details
         builder
             .addCase(getProductDetails.pending, (state) => {
-            state.admin.loading = true;
+            state.productDetails.loading = true;
             })
             .addCase(getProductDetails.fulfilled, (state, action) => {
-            state.admin.loading = false;
-            state.admin.products = action.payload;
+            state.productDetails.loading = false;
+            state.productDetails.product = action.payload;
             })
             .addCase(getProductDetails.rejected, (state, action) => {
-            state.admin.loading = false;
-            state.admin.error = action.payload;
+            state.productDetails.loading = false;
+            state.productDetails.error = action.payload;
             });
 
             // Handling product update
