@@ -157,6 +157,32 @@ export const getProductDetails = createAsyncThunk(
   }
 );
 
+export const createReview = createAsyncThunk(
+  'review/createReview',
+  async (reviewData, thunkApi) => {
+    try {
+      const { data } = await api.post('/product/reviews/new', reviewData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },   
+      });
+      return data;
+    } catch (error) {
+      if (error.response) {
+        return thunkApi.rejectWithValue({
+          message: error.response.data.message || 'An error occured',
+          status: error.response.status,
+        });
+      } else {
+        return thunkApi.rejectWithValue({
+          message: error.message,
+          status: 500,
+        })
+      }
+    }
+  }
+)
+
 export const clearErrors = () => async (dispatch) => {
   dispatch();
 };

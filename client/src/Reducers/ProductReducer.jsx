@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProduct, DeleteProduct, getAdminProducts, getProductDetails, getProducts, updateProduct } from "../Actions/productAction";
+import { createProduct, createReview, DeleteProduct, getAdminProducts, getProductDetails, getProducts, updateProduct } from "../Actions/productAction";
 
 const initialUserState = {
     products: [],
@@ -129,6 +129,21 @@ const productSlice = createSlice({
                 state.admin.loading = false;
                 state.admin.error = action.payload;
                 state.admin.success = false;
+                });
+
+                // create review
+                builder
+                .addCase(createReview.pending, (state) => {
+                    state.productDetails.loading = true;
+                }) 
+                .addCase(createReview.fulfilled, (state, action) => {
+                    state.productDetails.loading = false;
+                    state.productDetails.product.reviews = action.payload;
+                    state.productDetails.error = null;
+                })
+                .addCase(createReview.rejected, (state, action) => {
+                    state.productDetails.loading = false;
+                    state.productDetails.error = action.payload;
                 });
        },
 });
