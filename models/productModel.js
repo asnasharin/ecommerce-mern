@@ -62,10 +62,6 @@ const productSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            comment: {
-                type: String,
-                required: true,
-            },
             recommended: {  
                 type: Boolean,
                 required: true,

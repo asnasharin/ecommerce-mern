@@ -231,15 +231,15 @@ export const getAllReviews = asyncHandler(
 export const createProductReview = asyncHandler(
     async (req, res, next) => {
 
-        const { title, productId, ratings, comment, recommented } = req.body;
+        const { title, productId, ratings, recommended } = req.body;
            
         const review = {
             userId: req.user._id,
             name: req.user.name,
             ratings: Number(ratings),
             title: title,
-            comment: comment,
-            recommented: recommented,
+            // comment: comment,
+            recommended: recommended,
             // avatar: req.user.avatar.url,
         };
 
@@ -254,8 +254,8 @@ export const createProductReview = asyncHandler(
             product.reviews.forEach((rev) => {
                 if (rev.userId.toString() === req.user._id.toString()) {
                     rev.ratings = ratings;
-                    rev.comment = comment;
-                    rev.recommended = recommented;
+                    // rev.comment = comment;
+                    rev.recommended = recommended;
                     rev.title = title;
                     product.numOfReviews = product.reviews.length;
                 }
@@ -281,7 +281,6 @@ export const createProductReview = asyncHandler(
         });
     }
 )
-
 
 // delete review
 export const deleteReview = asyncHandler(

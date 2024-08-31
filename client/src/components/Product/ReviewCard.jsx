@@ -2,7 +2,7 @@ import React, { Suspense, useState } from "react";
 import Card from "./Card";
 import { Button, Grid, Rating, Typography } from "@mui/material";
 import styles from "../Product/ReviewCard.module.scss";
-const DialogBox = React.lazy(() => import("./DialogBox.jsx")) 
+const DialogBox = React.lazy(() => import("./DialogBox"));
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ function ReviewCard({ product }) {
 
   const handleClickOpen = () => {
     if (!isAuthenticated) {
-      alert("success");
+      alert("Please log in to write a review");
       navigate("/login");
     } else {
       setOpen(true);
@@ -23,6 +23,10 @@ function ReviewCard({ product }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  if (!product || !Array.isArray(product.reviews)) {
+    return <Typography>Loading reviews...</Typography>;
+  }
 
   return (
     <div className={styles.reviewRoot}>
@@ -44,7 +48,7 @@ function ReviewCard({ product }) {
         <DialogBox
           open={open}
           handleClose={handleClose}
-          className={styles.dialog}
+          productId={product._id}
         />
       </Suspense>
 
@@ -69,9 +73,13 @@ function ReviewCard({ product }) {
 
       {/* Review cards container */}
       <div className={styles.reviewCardContainer}>
-        {product.reviews && product.reviews.map((review) => (
-          <Card review={review} key={review.id} />
-        ))}
+        {Array.isArray(product.reviews) && product.reviews.length > 0 ? (
+          product.reviews.map((review) => (
+            <Card review={review} key={review._id || review.id} />
+          ))
+        ) : (
+          <Typography>No reviews yet.</Typography>
+        )}
       </div>
     </div>
   );

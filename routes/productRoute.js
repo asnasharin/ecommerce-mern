@@ -12,7 +12,7 @@ route.put("/update-prod/:id",protect, isAdmin, updateProduct);
 route.delete("/admin/delete-prod/:id",protect, isAdmin, deleteProductController);
 route.get("/product/:id", getProductDetails);
 route.get("/reviews/:id", getAllReviews)
-route.put("/reviews/new", protect, createProductReview);
+route.post("/product/reviews/new", protect, createProductReview);
 route.delete("/product/reviews/delete", protect, isAdmin, deleteReview)
 
 export default route;

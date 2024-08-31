@@ -8,6 +8,7 @@ import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails } from '../../Actions/productAction';
 import { addToCart } from '../../Actions/CartActions';
+import ReviewCard from './ReviewCard';
 
 function ProductDetails() {
   
@@ -125,7 +126,7 @@ function ProductDetails() {
           </section>
 
           <div className={styles.reviewCard}>
-            {/* <ReviewCard product={product} /> */}
+            <ReviewCard product={product}/>
           </div>
         </div>
       )}
