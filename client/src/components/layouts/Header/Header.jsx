@@ -12,9 +12,6 @@ function Header() {
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const cartItemCount = cartItems.length;
 
-    console.log("User:", user);
-console.log("Cart Items:", cartItems);
-console.log("Cart Item Count:", cartItemCount);
 
 
     return (
