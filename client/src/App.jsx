@@ -14,6 +14,7 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import UpdateProduct from './components/Admin/UpdateProduct';
 import Cart from './components/Cart/Cart';
 import ProductDetails from './components/Product/ProductDetails';
+import Profile from './components/User/Profile';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path='/admin/products' element={<ProductList />} />
         <Route path='/admin/new/product' element={<NewProduct />} />
         <Route path='/admin/product/:id' element={<UpdateProduct />} />
+        <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
       <Newsletter />

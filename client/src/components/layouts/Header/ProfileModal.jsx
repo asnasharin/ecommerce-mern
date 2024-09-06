@@ -50,7 +50,7 @@ const ProfileModal = ({ user, isAuthenticated }) => {
 
     const accountHandler = () => {
         setIsOpen(false);
-        navigate("/account");
+        navigate("/profile");
     };
 
     const ordersHandler = () => {
