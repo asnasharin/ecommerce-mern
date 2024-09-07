@@ -15,6 +15,7 @@ import UpdateProduct from './components/Admin/UpdateProduct';
 import Cart from './components/Cart/Cart';
 import ProductDetails from './components/Product/ProductDetails';
 import Profile from './components/User/Profile';
+import ProductReviews from './components/Admin/ProductReviews';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path='/admin/new/product' element={<NewProduct />} />
         <Route path='/admin/product/:id' element={<UpdateProduct />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/admin/reviews' element={<ProductReviews />} />
         </Route>
       </Routes>
       <Newsletter />
