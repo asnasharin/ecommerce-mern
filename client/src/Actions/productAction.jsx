@@ -183,6 +183,53 @@ export const createReview = createAsyncThunk(
   }
 )
 
+export const getAllReviews = createAsyncThunk(
+  'review/getallreview',
+
+  async (id, thunkApi) => {
+    try {
+      const { data } = await api.get(`/reviews/${id}`) 
+      console.log('Reviews fetched:', data);
+      return data; 
+    } catch (error) {
+      if (error.response) {
+        return thunkApi.rejectWithValue({
+          message: error.response.data.message || 'An error occured',
+          status: error.response.status,
+        });
+      } else {
+        return thunkApi.rejectWithValue({
+          message: error.message,
+          status: 500,
+        })
+      }
+    }
+  }
+)
+
+export const deleteReview = createAsyncThunk(
+  "review/deletereview",
+
+  async ({ reviewId, productId}, thunkApi) => {
+    try {
+      await api.delete(`/review/delete?product_id=${productId}&id=${reviewId}`);
+      return { reviewId, productId}
+    } catch (error) {
+      if (error.response) {
+        return thunkApi.rejectWithValue({
+          message: error.response.data.message || 'An error occured',
+          status: error.response.status,
+        });
+      } else {
+        return thunkApi.rejectWithValue({
+          message: error.message,
+          status: 500,
+        })
+      }
+    }
+  }
+)
+
 export const clearErrors = () => async (dispatch) => {
   dispatch();
 };
