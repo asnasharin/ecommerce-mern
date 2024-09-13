@@ -161,7 +161,7 @@ export const createReview = createAsyncThunk(
   'review/createReview',
   async (reviewData, thunkApi) => {
     try {
-      const { data } = await api.post('/product/reviews/new', reviewData, {
+      const { data } = await api.post('/product/review/new', reviewData, {
         headers: {
           'Content-Type': 'application/json',
         },   

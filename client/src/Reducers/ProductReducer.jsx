@@ -15,7 +15,8 @@ const initialAdminState = {
 };
 
 const initialProductDetailsState = {
-    product: {},  
+    product: {},
+    reviews: [], 
     error: null,
     loading: false,
 };
@@ -152,7 +153,7 @@ const productSlice = createSlice({
                 })
                 .addCase(getAllReviews.fulfilled, (state, action) => {
                     state.productDetails.loading = false;
-                    state.productDetails.reviews  = action.payload;
+                    state.productDetails.reviews  = action.payload.reviews;
                 })
                 .addCase(getAllReviews.rejected, (state, action) => {
                     state.productDetails.loading = false;
@@ -165,7 +166,7 @@ const productSlice = createSlice({
                 })
                 .addCase(deleteReview.fulfilled, (state, action) => {
                     state.productDetails.loading = false;
-                    state.productDetails.reviews = action.payload;
+                    state.productDetails.reviews = state.productDetails.reviews.filter(reviews => reviews.id !== action.payload.id);
                 })
                 .addCase(deleteReview.rejected, (state, action) => {
                     state.productDetails.loading = false;
