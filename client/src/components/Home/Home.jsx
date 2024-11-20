@@ -1,37 +1,55 @@
-import React, { useEffect } from 'react'
-import Banner from './Banner'
-import ProductCard from './ProductCard/ProductCard'
-import { useDispatch, useSelector } from "react-redux"
+import React, { useEffect } from 'react';
+import Banner from './Banner';
+import ProductCard from './ProductCard/ProductCard';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../Actions/productAction';
 import { clearErrors } from '../../Reducers/ProductReducer';
-import styles from "./Home.module.scss"
-
+import styles from './Home.module.scss';
 
 function Home() {
-  
   const dispatch = useDispatch();
-  const {  products, error } = useSelector((state) => state.products.user);
+  const { products, error } = useSelector((state) => state.products.user);
 
   useEffect(() => {
-    console.log("products card",products)
-    if(error) {
+    console.log("products card", products);
+    if (error) {
       alert(error);
       dispatch(clearErrors());
     }
     dispatch(getProducts());
-  }, [dispatch, error])
+  }, [dispatch, error]);
+
+  const limitedProducts = products?.slice(0, 7);
+
   return (
     <div>
-      <Banner imageUrl= "https://d3jmn01ri1fzgl.cloudfront.net/photoadking/webp_thumbnail/paprika-and-venetian-red-fashion-clothing-banner-template-krx9q4061f1079.webp"/>
+      <Banner />
+
+      <h2 className={styles.trending_heading}>Trending Products</h2>
+
       <div className={styles.trending_products}>
-        {products &&
-        products.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+        {limitedProducts &&
+          limitedProducts.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+      </div>
+      
+      <div className={styles.mid_image}>
+        <img src="/Image/midimage.png" alt="Special Offer" />
+      </div>
+
+      <div className={styles.square_image}>
+        <img src="/Image/squareimg.png" alt="New Arrival" />
+      </div>
+
+      <div className={styles.bottom_banner}>
+        <img
+          src="/Image/bottombanner.png"
+          alt="Exclusive Offer"
+        />
       </div>
     </div>
-
-  )
+  );
 }
 
-export default Home
+export default Home;
