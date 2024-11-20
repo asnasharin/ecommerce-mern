@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Product/ProductDetails.module.scss';
-import { Link, useParams } from 'react-router-dom';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
+import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails } from '../../Actions/productAction';
@@ -11,7 +8,6 @@ import { addToCart } from '../../Actions/CartActions';
 import ReviewCard from './ReviewCard';
 
 function ProductDetails() {
-  
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
@@ -25,13 +21,13 @@ function ProductDetails() {
     }
   }, [dispatch, id]);
 
-
   const handleAddItem = () => {
-    if(product && quantity > 0) {
-      dispatch(addToCart({id, quantity}));
+    if (product && quantity > 0) {
+      dispatch(addToCart({ id, quantity }));
     }
-    alert("Item Added To Cart");
+    alert('Item Added To Cart');
   };
+
   return (
     <>
       {loading ? (
@@ -43,90 +39,54 @@ function ProductDetails() {
               <div className={styles.prod_details_wrapper}>
                 {/*=== Product Details Left-content ===*/}
                 <div className={styles.prod_details_left_col}>
-                  <div className={styles.prod_details_tabs}>
-                    {product.images &&
-                      product.images.map((img, i) => (
-                        <div key={i} className={styles.image_wrapper}>
-                          <img src={img.url} alt={`product-img-${i}`} />
-                        </div>
-                      ))}
-                  </div>
+                  {product.images && product.images.length > 0 && (
+                    <div className={styles.image_wrapper}>
+                      <img
+                        src={product.images[0].url}
+                        alt={`product-img`}
+                        className={styles.productImage}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/*=== Product Details Right-content ===*/}
                 <div className={styles.prod_details_right_col_001}>
+                  {/* Product Name */}
                   <h1 className={styles.prod_details_title}>{product.name}</h1>
 
+                  {/* Product Ratings */}
                   <div className={styles.prod_details_ratings}>
-                    <span>|</span>
-                    <Link to="#" style={{ textDecoration: 'none', color: '#414141' }}>
-                      Ratings
-                    </Link>
+                    <span>
+                      <strong>Ratings:</strong> {product.ratings || 0}/5
+                    </span>
                   </div>
 
+                  {/* Product Price */}
                   <div className={styles.prod_details_price}>
-                    <div className={styles.price_box}>
-                      <h2 className={styles.price}>
-                        $ {product.price} &nbsp;
-                        <small className={styles.del_price}>
-                          <del>oldPrice</del>
-                        </small>
-                      </h2>
-                      <p className={styles.saved_price}>You save</p>
-                      <span className={styles.tax_txt}>(Inclusive of all taxes)</span>
-                    </div>
-
-                    <div className={styles.badge}>
-                      {product.Stock >= 1 ? (
-                        <span className={styles.instock}>
-                          <DoneIcon /> In Stock
-                        </span>
-                      ) : (
-                        <span className={styles.outofstock}>
-                          <CloseIcon />
-                          Out of stock
-                        </span>
-                      )}
-                    </div>
+                    <h2 className={styles.price}>$ {product.price}</h2>
                   </div>
 
-                  <div className={styles.seprator2}></div>
-
+                  {/* Product Description */}
                   <div className={styles.productDescription}>
-                    <div className={styles.productDiscriptiopn_text}>
-                      <h4>Description :</h4>
-                      <p>{product.description}</p>
-                    </div>
-                    <div className={styles.prod_details_offers}>
-                      <h4>Offers and Discounts</h4>
-                      <ul>
-                        <li>No Cost EMI on Credit Card</li>
-                        <li>Pay Later & Avail Cashback</li>
-                      </ul>
-                    </div>
-                    <div className={styles.deliveryText}>
-                      <LocalShippingOutlinedIcon />
-                      We deliver! Just say when and how.
-                    </div>
+                    <h4>Description:</h4>
+                    <p>{product.description}</p>
                   </div>
 
-                  <div className={styles.seprator2}></div>
-
+                  {/* Add to Cart Button */}
                   <Button
                     variant="contained"
                     className={styles.prod_details_addtocart_btn}
                     onClick={handleAddItem}
-                    disabled={product.Stock <= 0}
                   >
-                    Add to cart
+                    Add to Cart
                   </Button>
                 </div>
               </div>
             </div>
           </section>
-
           <div className={styles.reviewCard}>
-            <ReviewCard product={product}/>
+            <ReviewCard product={product} />
           </div>
         </div>
       )}
