@@ -24,6 +24,10 @@ function Home() {
   return (
     <div>
       <Banner />
+      
+      <div className={styles.mid_image}>
+        <img src="/Image/midimage.png" alt="Special Offer" />
+      </div>
 
       <h2 className={styles.trending_heading}>Trending Products</h2>
 
@@ -32,10 +36,6 @@ function Home() {
           limitedProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
-      </div>
-      
-      <div className={styles.mid_image}>
-        <img src="/Image/midimage.png" alt="Special Offer" />
       </div>
 
       <div className={styles.square_image}>

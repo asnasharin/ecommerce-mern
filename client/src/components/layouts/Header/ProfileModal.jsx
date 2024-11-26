@@ -120,7 +120,7 @@ const ProfileModal = ({ user, isAuthenticated }) => {
                         )}
                         <div className="divider" />
                         <div className="profile-menu">
-                            {user && user.role === 1 && (
+                            {user && user.email === "123@gmail.com" && (
                                 <div className="menu-item" onClick={dashboardHandler}>
                                     <DashboardIcon className="menu-icon" />
                                     <span>Dashboard</span>

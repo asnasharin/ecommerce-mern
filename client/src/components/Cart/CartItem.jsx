@@ -1,25 +1,25 @@
-import { Card, CardContent, CardMedia, IconButton, Input, Typography } from '@mui/material'
-import DeleteIcon from "@mui/icons-material/Delete"
-import RemoveIcon from "@mui/icons-material/Remove"
-import AddIcon from "@mui/icons-material/Add"
-import styles from "./CartItem.module.scss"
-import React from 'react'
+import React from 'react';
+import { Card, CardContent, CardMedia, IconButton, Input, Typography } from '@mui/material';
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import styles from "./CartItem.module.scss";
 
 function CartItem({ item, deleteCartItems, increaseQuantity, decreaseQuantity }) {
-  
+
+  const totalPrice = item.quantity * item.price;
+
   return (
-    <Card 
-    className= {styles.roots}
-    >
+    <Card className={styles.roots}>
       <CardMedia
         className={styles.media}
         image={item.image}
         title={item.name}
       />
-      <CardContent >
-        <div >
-          <div >
-            <Typography variant={styles.subtitle1} >
+      <CardContent>
+        <div>
+          <div>
+            <Typography variant="subtitle1" className={styles.subtitle1}>
               {item.name}
             </Typography>
 
@@ -32,26 +32,16 @@ function CartItem({ item, deleteCartItems, increaseQuantity, decreaseQuantity })
             </IconButton>
           </div>
 
-          <div >
-            <Typography  variant={styles.body1}>
-              {item.price}
-            </Typography>
-            <Typography variant={styles.subtitle1}>
-              finalPrice
-            </Typography>
-            <Typography
-              variant="caption"
-              component="span"
-              color="black"
-              className={styles.itemOldPrice}
-            >
-              <del>dis price</del>
+          <div>
+            <Typography variant="body1" className={styles.body1}>
+              Price: ₹{item.price.toFixed(2)}
             </Typography>
           </div>
         </div>
-        <div >
+
+        <div>
           <div className={styles.prod_details_additem}>
-            <h5>QTY:{item.quantity}</h5>
+            <h5>QTY: {item.quantity}</h5>
             <div className={styles.additem}>
               <IconButton
                 onClick={() => decreaseQuantity(item.productId, item.quantity)}
@@ -76,18 +66,18 @@ function CartItem({ item, deleteCartItems, increaseQuantity, decreaseQuantity })
             </div>
           </div>
 
-          <div >
-            <Typography variant={styles.body1} >
+          <div>
+            <Typography variant="body1" className={styles.body1}>
               TOTAL:
             </Typography>
-            <Typography variant={styles.subtitle1} >
-              total
+            <Typography variant="subtitle1" className={styles.subtitle1}>
+              ₹{totalPrice.toFixed(2)}
             </Typography>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
-export default CartItem
+export default CartItem;
