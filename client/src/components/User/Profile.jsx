@@ -82,12 +82,6 @@ function Profile() {
               <Typography className={styles.profileText}>Email: {user.email}</Typography>
             </div>
 
-            <Link to="/profile/update" style={{ textDecoration: "none" }}>
-              <Button variant="contained" className={styles.profileButton}>
-                EDIT DETAILS
-              </Button>
-            </Link>
-
             <div className={styles.details}>
               <Typography variant="h4" component="h1" className={styles.profileHeading} style={{ marginTop: "1.5rem" }}>
                 LOGIN DETAILS

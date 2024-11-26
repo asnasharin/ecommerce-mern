@@ -11,9 +11,8 @@ function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const totalPrice = 0; 
-  const totalDiscount = 0; 
-  const final = 0; 
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const final = totalPrice; 
   const isFocused = false; 
   const isValid = true; 
 
@@ -22,8 +21,6 @@ function Cart() {
   };
 
   const increaseQuantity = (id, quantity, stock) => {
-    console.log("Increase Quantity Called with:", { id, quantity, stock }); 
-
     let newQuantity = quantity + 1;
     if (newQuantity > stock) {
       return;
@@ -94,7 +91,7 @@ function Cart() {
                 <div className={styles.order_Summary_Item}>
                   <span>Discount</span>
                   <p>
-                    <del>{totalDiscount}</del>
+                    <del>0</del>
                   </p>
                 </div>
 
