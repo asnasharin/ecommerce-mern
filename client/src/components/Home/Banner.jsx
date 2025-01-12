@@ -8,7 +8,7 @@ import styles from "./Banner.module.scss";
 
 const slides = [
   {
-    image: "/Image/banner4.png",
+    image: "/Image/banner3.png",
   },
   {
     image: "/Image/banner3.png",
