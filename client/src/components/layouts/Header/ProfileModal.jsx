@@ -120,7 +120,7 @@ const ProfileModal = ({ user, isAuthenticated }) => {
                         )}
                         <div className="divider" />
                         <div className="profile-menu">
-                            {user && user.email === "123@gmail.com" && (
+                            {user && user.role === 1 && (
                                 <div className="menu-item" onClick={dashboardHandler}>
                                     <DashboardIcon className="menu-icon" />
                                     <span>Dashboard</span>
@@ -130,10 +130,10 @@ const ProfileModal = ({ user, isAuthenticated }) => {
                                 <AccountCircleIcon className="menu-icon" />
                                 <span>Profile</span>
                             </div>
-                            <div className="menu-item" onClick={ordersHandler}>
+                            {/* <div className="menu-item" onClick={ordersHandler}>
                                 <AssignmentIcon className="menu-icon" />
                                 <span>Orders</span>
-                            </div>
+                            </div> */}
                             <div className="menu-item" onClick={cartHandler}>
                                 <ShoppingCartIcon className="menu-icon" />
                                 <span>Cart</span>
