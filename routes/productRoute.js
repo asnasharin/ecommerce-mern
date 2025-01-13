@@ -5,10 +5,10 @@ import { isAdmin, protect } from "../middlewares/authMiddleware.js";
 
 const route = Router();
 
-route.post("/admin/create-product",protect, isAdmin, createProductController);
+route.post("/admin/create-product",protect, createProductController);
 route.get("/get-product", getAllProduct);
 route.get("/admin/products",protect, isAdmin,getAllProductsAdmin);
-route.put("/update-prod/:id",protect, isAdmin, updateProduct);
+route.put("/update-prod/:id",protect,  updateProduct);
 route.delete("/admin/delete-prod/:id",protect, isAdmin, deleteProductController);
 route.get("/product/:id", getProductDetails);
 route.get("/reviews/:id", getAllReviews)

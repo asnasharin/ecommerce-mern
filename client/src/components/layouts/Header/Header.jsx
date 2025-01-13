@@ -23,12 +23,6 @@ function Header() {
                 <li>
                     <Link to="/product" className="nav_link" style={{ textDecoration: "none" }}>Product</Link>
                 </li>
-                <li>
-                    <Link to="/contact" className="nav_link" style={{ textDecoration: "none" }}>Contact</Link>
-                </li>
-                <li>
-                    <Link to="/about" className="nav_link" style={{ textDecoration: "none" }}>About</Link>
-                </li>
             </ul>
             <span className='left_section'>
                 <Link to="/cart" style={{ color: "black", textDecoration: "none" }}>

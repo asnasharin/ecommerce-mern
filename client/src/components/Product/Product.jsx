@@ -5,6 +5,7 @@ import ProductCard from '../Home/ProductCard/ProductCard';
 import styles from './Product.module.scss';
 import { FormControlLabel, Radio, RadioGroup, Slider, Typography, Button } from '@mui/material';
 import InventoryIcon from "@mui/icons-material/Inventory"; 
+import Loader from '../Loader/Loader';
 
 function Product() {
   const categories = ["men", "women", "kids", "furniture", "shoe", "perfumes"];
@@ -38,7 +39,7 @@ function Product() {
 
   return (
     loading ? (
-      <h1>Loading...</h1>
+     <Loader />
     ) : (
       <>
         {products === undefined || products.length === 0 ? (

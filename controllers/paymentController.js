@@ -1,10 +1,15 @@
 import asyncHandler from "express-async-handler";
 import Stripe from "stripe";
+import dotenv from "dotenv";
 
-// Create a Stripe instance once (not inside the function)
+dotenv.config();
+
+if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not defined in .env file");
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Controller to create a payment intent
 export const paymentController = asyncHandler(async (req, res) => {
     const { amount } = req.body;
 
@@ -17,18 +22,21 @@ export const paymentController = asyncHandler(async (req, res) => {
         const myPayment = await stripe.paymentIntents.create({
             amount,
             currency: "inr",
-            metadata: {
-                company: "Ecommerce", // Optional metadata
-            },
+            metadata: { company: "Ecommerce" },
         });
 
         res.status(200).json({ success: true, clientSecret: myPayment.client_secret });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error("Stripe Error:", error.message);
+        res.status(500).json({ success: false, message: "Payment processing failed." });
     }
 });
 
-// Controller to send the Stripe publishable API key
+// Controller to send the Stripe API key
 export const sendStripeApiKey = asyncHandler(async (req, res) => {
+    if (!process.env.STRIPE_API_KEY) {
+        res.status(500).json({ success: false, message: "STRIPE_API_KEY is missing." });
+        return;
+    }
     res.status(200).json({ stripeApiKey: process.env.STRIPE_API_KEY });
 });
