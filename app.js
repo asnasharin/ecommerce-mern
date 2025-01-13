@@ -5,7 +5,8 @@ import userRouter from './routes/userRoute.js';
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 import fileUpload from 'express-fileupload';
 import productRoute from './routes/productRoute.js';
-import orderRoute from "./routes/orderRoute.js"
+import orderRoute from "./routes/orderRoute.js";
+import paymentRoute from "./routes/paymentRoute.js"
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(fileUpload());
 app.use("/api/v1", userRouter);
 app.use("/api/v1", productRoute);
 app.use("/api/v1", orderRoute)
+app.use('/api/v1', paymentRoute)
 
 //error handler
 app.use("*", notFound);

@@ -55,11 +55,11 @@ const ProductCard = ({ product }) => {
               {product.description}
             </Typography>
             <Box display="flex" alignItems="center" gap="10px" >
-              <Typography variant="body1" className={styles.oldPrice}>
+              {/* <Typography variant="body1" className={styles.oldPrice}>
                 {product.price}
-              </Typography>
+              </Typography> */}
               <Typography variant="body1" className={styles.finalPrice}>
-                {product.price}
+                ${product.price}
               </Typography>
             </Box>
           </CardContent>
